@@ -8,7 +8,7 @@ using System.Data.Entity;
 namespace EFDemo
 {
     //nuget package: EntityFramework
-    class StudentManagementContext:DbContext
+    public class StudentManagementContext:DbContext
     {
         public StudentManagementContext(): base()
         {
@@ -20,7 +20,46 @@ namespace EFDemo
         //auto name = ProjectName.ContextName
         //public StudentManagementContext() : base("Name:ConectionStringName")
         //the Db name will be in the connection string => Initial Catalog.
-        //Ensure the Connsring name matches the name given in base
+        //Ensure the Connstring name matches the name given in base
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Student>().HasOptional(s => s.School).WithRequired();
+
+            #region
+            /// <summary>
+            /// specify mapping TPC
+            /// classes should not have navigational properties.
+            /// mapping of child type and if they are inherited
+            /// 
+            /// fluent API mapping
+            /// </summary>
+
+            //modelBuilder.Entity<AlumniStudents>().Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("AlumniStudent");
+            //});
+            //modelBuilder.Entity<CurentStudents>().Map(m =>
+            //{
+            //    m.MapInheritedProperties();
+            //    m.ToTable("CurrentStudent");
+            //});
+            #endregion
+
+            //modelBuilder.HasDefaultSchema("My");        //change default schema
+
+            //relationship between classes
+            //one to one: navigation from ori to navi and navi to ori with out list (in class)
+            //in fluent api
+            modelBuilder.Entity<Student>().HasOptional(s => s.School).WithRequired(t => t.Student);
+            //Student => School optional        can change to required
+            //School => Student Required
+
+
+        }
 
         public DbSet<Student> Students { get; set; }
         public DbSet<School> Schools { get; set; }
