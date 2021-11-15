@@ -11,7 +11,7 @@ namespace EFDemo3
     {
         public SchoolMan2DbContext() : base()
         {
-
+            Database.SetInitializer(new CreateDatabaseIfNotExists<SchoolMan2DbContext>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
