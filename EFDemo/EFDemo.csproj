@@ -163,7 +163,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentManagementContext.cs" />
-    <Compile Include="StudentManagementInitialise.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
